@@ -76,7 +76,7 @@ def ListMessages(service, user_id='me', query="", label_ids=[]):
 def Get_Mail():
 	service = Get_Service()
 
-	query = "newer_than:3d"+" AND category:forums"
+	query = "newer_than:1d"#+" AND category:forums"
 
 	RemoveLabel = {'removeLabelIds': [], 'addLabelIds': ['Label_3']}
 
@@ -87,8 +87,8 @@ def Get_Mail():
 		message = service.users().messages().get(
 			userId='me', id=msg['id']).execute()
 		print("MESSAGE :",message['snippet'])
-		# if 'Label_3' in message['labelIds']:
-		# 	continue
+		if 'Label_3' in message['labelIds']:
+			continue
 		ModifyMessage(service,'me',msg['id'],RemoveLabel)#Remove UNREAD Label
 		snippet = message['snippet']
 		MailSubject = next(
